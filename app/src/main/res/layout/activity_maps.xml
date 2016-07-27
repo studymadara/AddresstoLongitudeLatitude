@@ -10,7 +10,8 @@
         android:text="Search address to Latlng"
         android:textStyle="bold"
         android:textSize="23dp"
-        android:minLines="0"/>
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <EditText
         android:layout_width="match_parent"

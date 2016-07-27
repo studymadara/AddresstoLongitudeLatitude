@@ -5,14 +5,30 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wagh on 23-Jun-16.
  */
 public class history extends AppCompatActivity {
+
+
+
+    //****************************  Recycler Update
+
+    RecyclerView recyclerView;
+
+    List<GMap> GMapList=new ArrayList<GMap>();
+
+
+    //***************************
 
     Double latitude,longitude,latitude1,longitude1;
     SQLiteDatabase mydb;
@@ -29,7 +45,37 @@ public class history extends AppCompatActivity {
         tv2=(TextView)findViewById(R.id.ans2);
         //getting data from home activity
 
+
+        //*********************************
+
+
+
+
+        //List
+
+        recyclerView=(RecyclerView)findViewById(R.id.tryrv);
+
+
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        RecyclerView.Adapter GetAdapter=new GetAdapter(GMapList);
+
+        recyclerView.setAdapter(GetAdapter);
+
+
+
+
+
+
+        //****************************************
+
         try {
+
+            GMap gmap;
 
 
             Intent i2 = getIntent();
@@ -65,13 +111,30 @@ public class history extends AppCompatActivity {
                 latitude1=cc.getDouble(i);
                 longitude1=cc.getDouble(ii);
                 address3=cc.getString(iii);
+
+                //***************************
+
+                gmap=new GMap();
+
+                gmap.setAddress(address3);
+
+                gmap.setLatitude(latitude1.toString());
+
+                gmap.setLongitude(longitude1.toString());
+
+                GMapList.add(gmap);
+
+                //**************************************
+
+                //the old way when i dont use to knw how list works
+                /*
                 result+=" \nAddress::";
                 result+=address3;
                 result+=" \nLatitude::";
                 result+=latitude1.toString();
                 result+=" \nLongitude::";
                 result+=longitude1.toString();
-                tv2.setText("Database:::::::::::::::::::\n"+result+"\n");
+                tv2.setText("Database:::::::::::::::::::\n"+result+"\n");**/
                 cc.moveToNext();
 
             }
